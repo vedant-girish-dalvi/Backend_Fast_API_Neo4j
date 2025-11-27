@@ -1,0 +1,106 @@
+@prefix cdo: <https://w3id.org/damagemodels/cdo#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dot: <https://w3id.org/dot#> .
+@prefix ex: <http://example.org/damageInstances#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4_2/OWL#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:corrosion_003 a cdo:Corrosion ;
+    cdo:area_mm2 2200.0 ;
+    cdo:damageLocatedOn ex:ifcbeam_003 ;
+    cdo:hasCoordinates "POLYGON((8.95 1.25 0.9, 9.12 1.3 0.88))"^^xsd:string ;
+    cdo:isStructural false ;
+    cdo:severity_level "low"^^xsd:string .
+
+ex:crack_001 a cdo:Crack ;
+    cdo:damageLocatedOn ex:ifcwall_001 ;
+    cdo:hasCoordinates "POLYGON((12.35 3.27 2.1, 12.67 3.44 2.08, 12.92 3.7 2.05))"^^xsd:string ;
+    cdo:isStructural true ;
+    cdo:length_mm 320.5 ;
+    cdo:severity_level "medium"^^xsd:string ;
+    cdo:width_mm 2.3 .
+
+ex:spalling_002 a cdo:Spalling ;
+    cdo:area_mm2 4520.0 ;
+    cdo:damageLocatedOn ex:ifccolumn_002 ;
+    cdo:depth_mm 15.0 ;
+    cdo:hasCoordinates "POLYGON((15.02 4.87 1.25, 15.15 4.95 1.23, 15.35 5.12 1.2))"^^xsd:string ;
+    cdo:isStructural true ;
+    cdo:severity_level "high"^^xsd:string .
+
+cdo: a voaf:Vocabulary,
+        owl:Ontology ;
+    dcterms:creator [ a foaf:Person ;
+            foaf:name "Vedant Dalvi" ] ;
+    dcterms:description "Ontology for damage and defects in reinforced concrete."@en ;
+    dcterms:issued "2018-10-25"^^xsd:date ;
+    dcterms:license "https://creativecommons.org/licenses/by/1.0" ;
+    dcterms:modified "2019-12-17"^^xsd:date ;
+    dcterms:title "Concrete Damage Ontology"@en ;
+    vann:preferredNamespacePrefix "cdo" ;
+    vann:preferredNamespaceUri "https://w3id.org/damagemodels/cdo#" ;
+    rdfs:comment "Ontology for damage and defects in reinforced concrete."@en ;
+    owl:versionIRI <https://w3id.org/damagemodels/cdo#/0.5.0> ;
+    owl:versionInfo "0.5.0" .
+
+cdo:Beam a owl:Class ;
+    rdfs:label "Beam"@en ;
+    rdfs:subClassOf cdo:BuildingElement ;
+    owl:equivalentClass ifc:IfcBeam .
+
+cdo:Column a owl:Class ;
+    rdfs:label "Column"@en ;
+    rdfs:subClassOf cdo:BuildingElement ;
+    owl:equivalentClass ifc:IfcColumn .
+
+cdo:Slab a owl:Class ;
+    rdfs:label "Slab"@en ;
+    rdfs:subClassOf cdo:BuildingElement ;
+    owl:equivalentClass ifc:IfcSlab .
+
+cdo:Wall a owl:Class ;
+    rdfs:label "Wall"@en ;
+    rdfs:subClassOf cdo:BuildingElement ;
+    owl:equivalentClass ifc:IfcWall .
+
+cdo:damageLocatedOn a owl:ObjectProperty ;
+    rdfs:label "damage located on"@en ;
+    rdfs:domain dot:ClassifiedDamage ;
+    rdfs:range cdo:BuildingElement .
+
+cdo:hasCoordinates a owl:DatatypeProperty ;
+    rdfs:label "has coordinates"@en ;
+    rdfs:domain dot:ClassifiedDamage ;
+    rdfs:range xsd:string .
+
+cdo:ifcGlobalId a owl:DatatypeProperty ;
+    rdfs:label "IFC GlobalId"@en ;
+    rdfs:comment "Links a building element to its IFC GUID."@en ;
+    rdfs:domain cdo:BuildingElement ;
+    rdfs:range xsd:string .
+
+cdo:isStructural a owl:DatatypeProperty ;
+    rdfs:label "is structural"@en ;
+    rdfs:domain dot:ClassifiedDamage ;
+    rdfs:range xsd:boolean .
+
+ex:ifcbeam_003 a cdo:IfcBeam ;
+    rdfs:label "IfcBeam instance 3" ;
+    cdo:ifcGlobalId "0Jfhs7Trw2$N6q9A1xL0dE"^^xsd:string .
+
+ex:ifccolumn_002 a cdo:IfcColumn ;
+    rdfs:label "IfcColumn instance 2" ;
+    cdo:ifcGlobalId "1h9d8FgRz5sQy77KJ5uE4C"^^xsd:string .
+
+ex:ifcwall_001 a cdo:IfcWall ;
+    rdfs:label "IfcWall instance 1" ;
+    cdo:ifcGlobalId "3hs9K9h1v5$9P2B6z9q1fR"^^xsd:string .
+
+cdo:BuildingElement a owl:Class ;
+    rdfs:label "Building Element"@en .
+

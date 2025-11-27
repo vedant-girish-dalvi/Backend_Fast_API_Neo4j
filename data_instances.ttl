@@ -1,0 +1,152 @@
+@prefix ex: <http://example.org/damageInstances#> .
+@prefix cdo: <https://w3id.org/damagemodels/cdo#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#################################################################
+#    Building Element Instances with IFC GlobalId
+#################################################################
+
+ex:beam_001 rdf:type cdo:Beam ;
+    rdfs:label "Main Beam 1" ;
+    cdo:ifcGlobalId "3k9HsYt7n9fhP5v$yY1B2a" .
+
+ex:beam_002 rdf:type cdo:Beam ;
+    rdfs:label "Main Beam 2" ;
+    cdo:ifcGlobalId "0SDd9adf823JkLmNoPqRtV" .
+
+ex:beam_003 rdf:type cdo:Beam ;
+    rdfs:label "Secondary Beam 1" ;
+    cdo:ifcGlobalId "1XyZ12OP34QrSt56UvWxy9" .
+
+ex:beam_004 rdf:type cdo:Beam ;
+    rdfs:label "Secondary Beam 2" ;
+    cdo:ifcGlobalId "9LmNOpQ12RsT34UvWxYz56" .
+
+ex:column_001 rdf:type cdo:Column ;
+    rdfs:label "Corner Column 1" ;
+    cdo:ifcGlobalId "2Yh5Xdr4a7b97Xj1KdfkZe" .
+
+ex:column_002 rdf:type cdo:Column ;
+    rdfs:label "Corner Column 2" ;
+    cdo:ifcGlobalId "7AbCdEfGh123IjKlMnOpQr" .
+
+ex:wall_001 rdf:type cdo:Wall ;
+    rdfs:label "South Wall" ;
+    cdo:ifcGlobalId "1AbcDeFgHiJkLmNoPqRstU" .
+
+ex:wall_002 rdf:type cdo:Wall ;
+    rdfs:label "North Wall" ;
+    cdo:ifcGlobalId "3QrStUvWxYz12AbCdEfGhI" .
+
+ex:wall_003 rdf:type cdo:Wall ;
+    rdfs:label "East Wall" ;
+    cdo:ifcGlobalId "8MnOpQrStUvWxYz12AbCdE" .
+
+ex:wall_004 rdf:type cdo:Wall ;
+    rdfs:label "West Wall" ;
+    cdo:ifcGlobalId "4FgHiJkLmNoPqRstUvWxYz" .
+
+ex:slab_001 rdf:type cdo:Slab ;
+    rdfs:label "First Floor Slab" ;
+    cdo:ifcGlobalId "4WxyZ12OP34QrSt56UvWxy" .
+
+ex:slab_002 rdf:type cdo:Slab ;
+    rdfs:label "Roof Slab" ;
+    cdo:ifcGlobalId "6UvWxYz12AbCdEfGhIjKlM" .
+
+#################################################################
+#    Damage Instances linked to Damage Class
+#################################################################
+
+# Cracks
+ex:crack_001 rdf:type cdo:Crack ;
+    cdo:INSTANCE_OF ex:Crack ;
+    cdo:crackWidth "2.0"^^xsd:decimal ;
+    cdo:crackSpacing "3.7"^^xsd:decimal ;
+    cdo:hasCoordinates "POLYGON((10 10, 20 10, 20 20, 10 20, 10 10))" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "high" ;
+    cdo:inspectionStatus "pending" ;
+    cdo:damageLocatedOn ex:beam_001 .
+
+ex:crack_002 rdf:type cdo:Crack ;
+    cdo:INSTANCE_OF ex:Crack ;
+    cdo:crackWidth "1.2"^^xsd:decimal ;
+    cdo:crackSpacing "4.1"^^xsd:decimal ;
+    cdo:hasCoordinates "POINT(45 60)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "medium" ;
+    cdo:inspectionStatus "inspected" ;
+    cdo:damageLocatedOn ex:wall_002 .
+
+# Rust
+ex:rust_001 rdf:type cdo:Rust ;
+    cdo:INSTANCE_OF ex:Rust ;
+    cdo:hasCoordinates "POINT(12 15)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "medium" ;
+    cdo:inspectionStatus "pending" ;
+    cdo:damageLocatedOn ex:beam_002 .
+
+ex:rust_002 rdf:type cdo:Rust ;
+    cdo:INSTANCE_OF ex:Rust ;
+    cdo:hasCoordinates "POINT(30 45)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "high" ;
+    cdo:inspectionStatus "inspected" ;
+    cdo:damageLocatedOn ex:column_001 .
+
+ex:rust_003 rdf:type cdo:Rust ;
+    cdo:INSTANCE_OF ex:Rust ;
+    cdo:hasCoordinates "POINT(50 25)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "critical" ;
+    cdo:inspectionStatus "pending" ;
+    cdo:damageLocatedOn ex:slab_002 .
+
+# Wetspots
+ex:wetspot_001 rdf:type cdo:Wetspot ;
+    cdo:INSTANCE_OF ex:Wetspot ;
+    cdo:hasCoordinates "POLYGON((70 20, 80 20, 80 30, 70 30, 70 20))" ;
+    cdo:isStructural false ;
+    cdo:severityLevel "low" ;
+    cdo:inspectionStatus "inspected" ;
+    cdo:damageLocatedOn ex:slab_001 .
+
+ex:wetspot_002 rdf:type cdo:Wetspot ;
+    cdo:INSTANCE_OF ex:Wetspot ;
+    cdo:hasCoordinates "POINT(40 70)" ;
+    cdo:isStructural false ;
+    cdo:severityLevel "medium" ;
+    cdo:inspectionStatus "pending" ;
+    cdo:damageLocatedOn ex:wall_003 .
+
+# Hollow Areas
+ex:hollowarea_001 rdf:type cdo:HollowArea ;
+    cdo:INSTANCE_OF ex:HollowArea ;
+    cdo:hasCoordinates "POINT(32 32)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "medium" ;
+    cdo:inspectionStatus "inspected" ;
+    cdo:damageLocatedOn ex:column_002 .
+
+ex:hollowarea_002 rdf:type cdo:HollowArea ;
+    cdo:INSTANCE_OF ex:HollowArea ;
+    cdo:hasCoordinates "POINT(12 65)" ;
+    cdo:isStructural true ;
+    cdo:severityLevel "high" ;
+    cdo:inspectionStatus "pending" ;
+    cdo:damageLocatedOn ex:beam_003 .
+
+#################################################################
+#    Damage Relationships
+#################################################################
+
+ex:crack_001 cdo:causes ex:rust_001 .
+ex:rust_002 cdo:causes ex:hollowarea_001 .
+ex:wetspot_001 cdo:coexistsWith ex:crack_002 .
+ex:hollowarea_002 cdo:hasOriginIn ex:wetspot_004 .
+ex:rust_003 cdo:coexistsWith ex:wetspot_005 .
+ex:hollowarea_003 cdo:coexistsWith ex:hollowarea_001 .

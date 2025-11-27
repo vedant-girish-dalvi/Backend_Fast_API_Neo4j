@@ -1,0 +1,64 @@
+@prefix ex: <http://example.org/damageInstances#> .
+@prefix cdo: <https://w3id.org/damagemodels/cdo#> .
+@prefix dce: <http://purl.org/dc/elements/1.1/> .
+@prefix dco: <https://w3id.org/dco#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix dot: <https://w3id.org/dot#> .
+@prefix ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4_2/OWL#> .
+
+#################################################################
+# Ontology Metadata
+#################################################################
+
+<https://w3id.org/damagemodels/cdo#> rdf:type owl:Ontology , voaf:Vocabulary ;
+    dcterms:creator [
+      rdf:type foaf:Person ;
+      foaf:name "Vedant Dalvi" ;
+    ] ;
+    owl:versionIRI <https://w3id.org/damagemodels/cdo#/0.5.0> ;
+    owl:versionInfo "0.5.0" ;
+    rdfs:comment """Ontology for damage and defects in reinforced concrete."""@en ;
+    dcterms:license "https://creativecommons.org/licenses/by/1.0" ;
+    dcterms:description "Ontology for damage and defects in reinforced concrete."@en ;
+    dcterms:modified "2019-12-17"^^xsd:date ;
+    dcterms:issued "2018-10-25"^^xsd:date ;
+    dcterms:title "Concrete Damage Ontology"@en ;
+    vann:preferredNamespacePrefix "cdo" ;
+    vann:preferredNamespaceUri "https://w3id.org/damagemodels/cdo#" .
+
+#################################################################
+#    Damage Class Nodes
+#################################################################
+
+ex:Crack rdf:type cdo:DamageClass ;
+    rdfs:label "Crack"@en .
+
+ex:Rust rdf:type cdo:DamageClass ;
+    rdfs:label "Rust"@en .
+
+ex:Wetspot rdf:type cdo:DamageClass ;
+    rdfs:label "Wetspot"@en .
+
+ex:HollowArea rdf:type cdo:DamageClass ;
+    rdfs:label "Hollow Area"@en .
+
+#################################################################
+#    Extra Properties for Severity & Inspection
+#################################################################
+
+cdo:severityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain dot:ClassifiedDamage ;
+    rdfs:range xsd:string ;
+    rdfs:label "severity level"@en .
+
+cdo:inspectionStatus rdf:type owl:DatatypeProperty ;
+    rdfs:domain dot:ClassifiedDamage ;
+    rdfs:range xsd:string ;
+    rdfs:label "inspection status"@en .

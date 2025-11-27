@@ -1,0 +1,28 @@
+{
+  "image_filename": "example.jpg",
+  "detections": [
+    {
+      "damage_class": "crack",
+      "damage_parameters": {
+        "length_mm": null,
+        "width_mm": null,
+        "severity_level": "low | medium | high | critical",
+        "inspection_status": "inspected | pending"
+      },
+      "damage_location_3D": [
+        { "x": null, "y": null, "z": null }
+      ],
+      "damage_location_2D": [
+        { "x": null, "y": null }
+      ],
+      "ifc_element": "IfcWall | IfcBeam | IfcColumn | IfcSlab",
+      "ifc_guid": null,
+      "damage_relations": [
+        {
+          "related_to_indices": [1, 2],  
+          "relation_type": "adjacent_to | overlaps |"
+        }
+      ]
+    }
+  ]
+}

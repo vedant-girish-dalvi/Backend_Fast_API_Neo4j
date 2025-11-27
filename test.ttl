@@ -1,0 +1,90 @@
+@prefix dacl: <http://example.org/dacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/dacl> rdf:type owl:Ontology ;
+    rdfs:comment "Ontology for Damage Classes in the DACL Dataset"@en .
+
+# Define base class
+dacl:Damage rdf:type owl:Class ;
+    rdfs:label "Damage" ;
+    rdfs:comment "Superclass for all damage types in the DACL dataset." .
+
+# Individual damage classes
+dacl:Crack rdf:type owl:Class ;
+    rdfs:label "Crack" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Spalling rdf:type owl:Class ;
+    rdfs:label "Spalling" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Corrosion rdf:type owl:Class ;
+    rdfs:label "Corrosion" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:ExposedRebar rdf:type owl:Class ;
+    rdfs:label "Exposed Rebar" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Efflorescence rdf:type owl:Class ;
+    rdfs:label "Efflorescence" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Delamination rdf:type owl:Class ;
+    rdfs:label "Delamination" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Discoloration rdf:type owl:Class ;
+    rdfs:label "Discoloration" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Deformation rdf:type owl:Class ;
+    rdfs:label "Deformation" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Stain rdf:type owl:Class ;
+    rdfs:label "Stain" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:BiologicalGrowth rdf:type owl:Class ;
+    rdfs:label "Biological Growth" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Abrasion rdf:type owl:Class ;
+    rdfs:label "Abrasion" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:JointDamage rdf:type owl:Class ;
+    rdfs:label "Joint Damage" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:MissingSection rdf:type owl:Class ;
+    rdfs:label "Missing Section" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Leakage rdf:type owl:Class ;
+    rdfs:label "Leakage" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Void rdf:type owl:Class ;
+    rdfs:label "Void" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Blistering rdf:type owl:Class ;
+    rdfs:label "Blistering" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Scaling rdf:type owl:Class ;
+    rdfs:label "Scaling" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Honeycombing rdf:type owl:Class ;
+    rdfs:label "Honeycombing" ;
+    rdfs:subClassOf dacl:Damage .
+
+dacl:Detachment rdf:type owl:Class ;
+    rdfs:label "Detachment" ;
+    rdfs:subClassOf dacl:Damage .

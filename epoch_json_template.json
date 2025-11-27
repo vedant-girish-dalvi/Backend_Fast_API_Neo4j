@@ -1,0 +1,26 @@
+{
+  "Damage_ID": "",
+  "DamageType": "crack",
+  "Epoch": 0,
+  "Length": 1,
+  "Minimum_Width": 1,
+  "Maximum_Width": 1,
+  "Median_Width": 1,
+  "Position_3D_Axis": {
+    "x": [],
+    "y": [],
+    "z": []
+  },
+  "Max_Width_3D_Position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "Storage_Path": "",
+  "ReferenceSystem": "",
+  "Image_Filename": "",
+  "IFC_Data": "",
+  "IFC_Element": "",
+  "IFC_GUID": "",
+  "IFC_Filepath": ""
+}

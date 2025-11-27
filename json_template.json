@@ -1,0 +1,39 @@
+{
+  "image_filename": "example.jpg",
+  "detections": [
+    {
+      "damage_class": "crack",
+      "damage_parameters": {
+        "length_mm": null,
+        "width_mm": null,
+        "severity_level": "low | medium | high | critical",
+        "inspection_status": ""
+      },
+      "damage_location_3D": [
+        { "x": null, "y": null, "z": null }
+      ],
+      "damage_location_2D": [
+        { "x": null, "y": null }
+      ],
+      "ifc_element": "IfcWall | IfcBeam | IfcColumn | IfcSlab",
+      "ifc_guid": null,
+      "damage_relations": [
+        {
+          "related_to_indices": [1, 2],  
+          "relation_type": "adjacent_to | causes | consequence_of | overlaps | extends_into | propagates_from | intersects_with | part_of | similar_to"
+        }
+      ]
+    }
+  ],
+  "relation_vocabulary": {
+    "adjacent_to": "The damage is physically next to another damage without direct causation.",
+    "causes": "The damage directly leads to or contributes to another damage.",
+    "consequence_of": "The damage is the result of another damage.",
+    "overlaps": "The damage spatially overlaps with another damage region.",
+    "extends_into": "The damage continues or expands into another element or damage region.",
+    "propagates_from": "The damage originates at another damage and spreads outward.",
+    "intersects_with": "The damage crosses paths with another damage.",
+    "part_of": "The damage is a sub-component of a larger damage pattern.",
+    "similar_to": "The damage has similar characteristics (e.g., size, pattern, orientation) to another damage."
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "image_filename": "building_damage_001.jpg",
+  "detections": [
+    {
+      "damage_class": "crack",
+      "damage_parameters": {
+        "length_mm": 320.5,
+        "width_mm": 2.3,
+        "severity_level": "medium"
+      },
+      "damage_location_3D": [
+        { "x": 12.35, "y": 3.27, "z": 2.10 },
+        { "x": 12.67, "y": 3.44, "z": 2.08 },
+        { "x": 12.92, "y": 3.70, "z": 2.05 }
+      ],
+      "ifc_element": "IfcWall",
+      "ifc_guid": "2DBS9UlPj8kv$UBM5D$JMO",
+      "damage_relations": [
+        {
+          "related_to_indices": [1],
+          "relation_type": "adjacent"
+        }
+      ]
+    },
+    {
+      "damage_class": "crack",
+      "damage_parameters": {
+        "length_mm": 452.0,
+        "width_mm": 1.9,
+        "severity_level": "high"
+      },
+      "damage_location_3D": [
+        { "x": 15.02, "y": 4.87, "z": 1.25 },
+        { "x": 15.15, "y": 4.95, "z": 1.23 },
+        { "x": 15.35, "y": 5.12, "z": 1.20 }
+      ],
+      "ifc_element": "IfcWall",
+      "ifc_guid": "2DBS9UlPj8kv$UBM5D$JMO",
+      "damage_relations": [
+        {
+          "related_to_indices": [0],
+          "relation_type": "adjacent"
+        }
+      ]
+    }
+  ]
+}
