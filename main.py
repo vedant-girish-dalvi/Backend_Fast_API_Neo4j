@@ -8,9 +8,9 @@ import os, json
 
 # --- Load environment variables ---
 load_dotenv()
-uri = os.getenv("uri", "bolt://localhost:7687")
-user = os.getenv("user", "neo4j")
-pwd = os.getenv("pwd", "your_password")
+uri = os.getenv('uri')
+user = os.getenv('user')
+pwd = os.getenv('pwd')
 
 # --- Neo4j Driver Wrapper ---
 class Neo4jConnection:
@@ -36,189 +36,14 @@ def get_db():
 # --- FastAPI Setup ---
 app = FastAPI()
 
-# # --- Data Models ---
-# class Damage(BaseModel):
-#     id: str = Field(..., min_length=1, description="Unique ID of the damage")
-#     type: str = Field(..., min_length=1, description="Type of damage (e.g., Crack, Spalling)")
-#     severity: str = Field(..., min_length=1, description="Severity level of the damage")
-
-# class Relationship(BaseModel):
-#     source_id: str = Field(..., min_length=1)
-#     target_id: str = Field(..., min_length=1)
-#     relation_type: str = Field(..., min_length=1)
 
 # --- Root / Health Check ---
 @app.get("/")
-def root():
+async def root():
     return {"message": "FastAPI + Neo4j API is running!"}
 
-## --- API Endpoints ---
-## Add new damage instance
-# @app.post("/damage")
-# def create_damage(damage: Damage, db: Annotated[Neo4jConnection, Depends(get_db)]):
-#     if not damage.id.strip() or not damage.type.strip() or not damage.severity.strip():
-#         raise HTTPException(status_code=400, detail="Damage fields cannot be empty")
-    
-#     query = f"""
-#     CREATE (d:Damage:{damage.type} {{id: $id, severity: $severity}})
-#     RETURN d
-#     """
-#     try:
-#         result = db.query(query, {"id": damage.id, "severity": damage.severity})
-#         return {"status": "created", "damage": result}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
 
-# # Get damage instance info with ID
-# @app.get("/damage/{id}")
-# def get_damage(id: str, db: Annotated[Neo4jConnection, Depends(get_db)]):
-#     if not id.strip():
-#         raise HTTPException(status_code=400, detail="ID cannot be empty")
-    
-#     query = "MATCH (d:Damage {id: $id}) RETURN d"
-#     try:
-#         result = db.query(query, {"id": id})
-#         if not result:
-#             raise HTTPException(status_code=404, detail="Damage not found")
-#         return result[0]
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# # Delete a damage instance
-# @app.delete("/damage/{id}")
-# def delete_damage(id: str, db: Annotated[Neo4jConnection, Depends(get_db)]):
-#     if not id.strip():
-#         raise HTTPException(status_code=400, detail="ID cannot be empty")
-    
-#     query = """
-#     MATCH (d:Damage {id: $id})
-#     DETACH DELETE d
-#     RETURN $id AS deleted_id
-#     """
-#     try:
-#         result = db.query(query, {"id": id})
-#         if not result:
-#             raise HTTPException(status_code=404, detail="Damage not found")
-#         return {"status": "deleted", "id": result[0]["deleted_id"]}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# # Add relatiionship between damage instances with IDs
-# @app.post("/damage/relate")
-# def relate_damages(relationship: Relationship, db: Annotated[Neo4jConnection, Depends(get_db)]):
-#     if not relationship.source_id.strip() or not relationship.target_id.strip() or not relationship.relation_type.strip():
-#         raise HTTPException(status_code=400, detail="Relationship fields cannot be empty")
-    
-#     query = f"""
-#     MATCH (a:Damage {{id: $source_id}}), (b:Damage {{id: $target_id}})
-#     CREATE (a)-[r:{relationship.relation_type}]->(b)
-#     RETURN a.id AS source, type(r) AS relation, b.id AS target
-#     """
-#     try:
-#         result = db.query(query, {
-#             "source_id": relationship.source_id,
-#             "target_id": relationship.target_id
-#         })
-#         return {"status": "relationship_created", "details": result}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-    
-# # --- Upload JSON file with detections ---
-# @app.post("/upload_json")
-# async def upload_json(file: UploadFile = File(...), db: Annotated[Neo4jConnection, Depends(get_db)] = None):
-#     if not file.filename.endswith(".json"):
-#         raise HTTPException(status_code=400, detail="Only JSON files are allowed")
-
-#     try:
-#         contents = await file.read()
-#         data = json.loads(contents.decode("utf-8"))
-
-#         # Validate main structure
-#         if "image_filename" not in data or "detections" not in data:
-#             raise HTTPException(status_code=400, detail="Invalid JSON structure. Must include 'image_filename' and 'detections'.")
-
-#         image_filename = data["image_filename"]
-#         detections = data["detections"]
-
-#         if not isinstance(detections, list):
-#             raise HTTPException(status_code=400, detail="'detections' must be a list.")
-
-#         created_nodes = []
-#         created_rels = []
-
-#         for idx, det in enumerate(detections):
-#             damage_class = det.get("damage_class", "Unknown")
-#             damage_params = det.get("damage_parameters", {})
-#             location3D = det.get("damage_location_3D", [])
-#             location2D = det.get("damage_location_2D", [])
-#             ifc_element = det.get("ifc_element")
-#             ifc_guid = det.get("ifc_guid")
-
-#             # Create a unique ID based on filename + index
-#             damage_id = f"{image_filename}_d{idx}"
-
-#             # Create Damage node with properties
-#             query = f"""
-#             CREATE (d:Damage:{damage_class} {{
-#                 id: $id,
-#                 image: $image,
-#                 severity: $severity,
-#                 inspection_status: $inspection_status,
-#                 ifc_element: $ifc_element,
-#                 ifc_guid: $ifc_guid,
-#                 location3D: $location3D,
-#                 location2D: $location2D
-#             }})
-#             RETURN d
-#             """
-#             result = db.query(query, {
-#                 "id": damage_id,
-#                 "image": image_filename,
-#                 "severity": damage_params.get("severity_level"),
-#                 "inspection_status": damage_params.get("inspection_status"),
-#                 "ifc_element": ifc_element,
-#                 "ifc_guid": ifc_guid,
-#                 "location3D": json.dumps(location3D),
-#                 "location2D": json.dumps(location2D)
-#             })
-#             created_nodes.append(result)
-
-#         # Create relationships after nodes are created
-#         for idx, det in enumerate(detections):
-#             damage_id = f"{image_filename}_d{idx}"
-#             relations = det.get("damage_relations", [])
-#             for rel in relations:
-#                 related_indices = rel.get("related_to_indices", [])
-#                 rel_type = rel.get("relation_type", "RELATED_TO")
-#                 for target_idx in related_indices:
-#                     target_id = f"{image_filename}_d{target_idx}"
-#                     query = f"""
-#                     MATCH (a:Damage {{id: $source_id}}), (b:Damage {{id: $target_id}})
-#                     CREATE (a)-[r:{rel_type}]->(b)
-#                     RETURN a.id AS source, type(r) AS relation, b.id AS target
-#                     """
-#                     result = db.query(query, {
-#                         "source_id": damage_id,
-#                         "target_id": target_id
-#                     })
-#                     created_rels.extend(result)
-
-#         return {
-#             "status": "uploaded",
-#             "image_filename": image_filename,
-#             "damages_created": len(created_nodes),
-#             "relationships_created": len(created_rels),
-#             "nodes": created_nodes,
-#             "relationships": created_rels
-#         }
-
-#     except json.JSONDecodeError:
-#         raise HTTPException(status_code=400, detail="Invalid JSON file")
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-
-# --- Upload New Damage JSON Format (Adapted to New Structure) ---
+# --- Upload JSON Format ---
 @app.post("/upload_damage_json")
 async def upload_damage_json(
     file: UploadFile = File(...),
